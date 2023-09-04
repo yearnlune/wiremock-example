@@ -3,7 +3,11 @@ package io.github.yearnlune.wiremockexample.support
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.matching
+import com.github.tomakehurst.wiremock.client.WireMock.put
+import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import io.github.yearnlune.wiremockexample.domain.AnotherDTO
 import org.springframework.http.HttpStatus
 import java.time.LocalDateTime

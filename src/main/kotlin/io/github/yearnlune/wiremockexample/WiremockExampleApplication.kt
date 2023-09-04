@@ -9,5 +9,5 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 class WiremockExampleApplication
 
 fun main(args: Array<String>) {
-	runApplication<WiremockExampleApplication>(*args)
+    runApplication<WiremockExampleApplication>(*args)
 }

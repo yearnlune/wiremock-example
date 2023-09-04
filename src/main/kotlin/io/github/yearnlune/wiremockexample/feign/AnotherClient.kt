@@ -20,5 +20,8 @@ interface AnotherClient {
     fun findAnotherById(@PathVariable("id") id: String): AnotherDTO
 
     @PutMapping("/api/{id}")
-    fun updateNickname(@PathVariable("id") id: String, @RequestParam("nickname") nickname: String): AnotherDTO
+    fun updateNickname(
+        @PathVariable("id") id: String,
+        @RequestParam("nickname") nickname: String
+    ): AnotherDTO
 }

@@ -25,4 +25,11 @@ class ExampleService(
             anotherClient.updateNickname(id, nickname)
         }
     }
+
+    fun exampleFunctionC(anotherDTO: AnotherDTO): Result<AnotherDTO> {
+        return runCatching {
+            /* Some codes... */
+            anotherClient.createAnother(anotherDTO)
+        }
+    }
 }

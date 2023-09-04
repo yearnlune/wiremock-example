@@ -4,7 +4,9 @@ import io.github.yearnlune.wiremockexample.domain.AnotherDTO
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
 @FeignClient(
@@ -13,15 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam
 )
 interface AnotherClient {
 
-    @GetMapping("/api/nickname/{nickname}")
+    @GetMapping("/api/another/nickname/{nickname}")
     fun hasNickname(@PathVariable("nickname") nickname: String): Boolean
 
-    @GetMapping("/api/{id}")
+    @GetMapping("/api/another/{id}")
     fun findAnotherById(@PathVariable("id") id: String): AnotherDTO
 
-    @PutMapping("/api/{id}")
+    @PutMapping("/api/another/{id}")
     fun updateNickname(
         @PathVariable("id") id: String,
         @RequestParam("nickname") nickname: String
+    ): AnotherDTO
+
+    @PostMapping("/api/another")
+    fun createAnother(
+        @RequestBody another: AnotherDTO
     ): AnotherDTO
 }

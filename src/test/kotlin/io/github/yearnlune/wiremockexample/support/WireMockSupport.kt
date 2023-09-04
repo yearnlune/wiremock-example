@@ -4,8 +4,10 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
+import com.github.tomakehurst.wiremock.client.WireMock.equalToJson
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.matching
+import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.put
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching
 import io.github.yearnlune.wiremockexample.domain.AnotherDTO
@@ -15,6 +17,7 @@ import java.time.LocalDateTime
 class WireMockSupport {
 
     companion object {
+        private const val ANOTHER_BASE_URL = "/api/another"
         private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
         fun setupFeignClient(mockServer: WireMockServer) {
@@ -23,7 +26,7 @@ class WireMockSupport {
 
         private fun setupAnotherClient(mockServer: WireMockServer) {
             mockServer.stubFor(
-                get(urlPathMatching("/api/nickname/duplicated$"))
+                get(urlPathMatching("$ANOTHER_BASE_URL/nickname/duplicated$"))
                     .atPriority(1)
                     .willReturn(
                         aResponse()
@@ -33,7 +36,7 @@ class WireMockSupport {
                     )
             )
             mockServer.stubFor(
-                get(urlPathMatching("/api/nickname/exception$"))
+                get(urlPathMatching("$ANOTHER_BASE_URL/nickname/exception$"))
                     .atPriority(1)
                     .willReturn(
                         aResponse()
@@ -42,7 +45,7 @@ class WireMockSupport {
                     )
             )
             mockServer.stubFor(
-                get(urlPathMatching("/api/nickname/\\w{4,12}$"))
+                get(urlPathMatching("$ANOTHER_BASE_URL/nickname/\\w{4,12}$"))
                     .atPriority(999)
                     .willReturn(
                         aResponse()
@@ -52,7 +55,7 @@ class WireMockSupport {
                     )
             )
             mockServer.stubFor(
-                put(urlPathMatching("/api/f0161e50-4428-4e36-a6e0-a35b63cdb3cf"))
+                put(urlPathMatching("$ANOTHER_BASE_URL/f0161e50-4428-4e36-a6e0-a35b63cdb3cf"))
                     .atPriority(1)
                     .withQueryParam("nickname", matching(".*"))
                     .willReturn(
@@ -63,7 +66,36 @@ class WireMockSupport {
                                 objectMapper.writeValueAsString(
                                     AnotherDTO(
                                         "f0161e50-4428-4e36-a6e0-a35b63cdb3cf",
-                                        "홍길동",
+                                        "raymond",
+                                        "yearnlune",
+                                        LocalDateTime.of(2023, 9, 1, 0, 0, 0)
+                                    )
+                                )
+                            )
+                    )
+            )
+            mockServer.stubFor(
+                post(urlPathMatching(ANOTHER_BASE_URL))
+                    .atPriority(1)
+                    .withRequestBody(
+                        equalToJson(
+                            objectMapper.writeValueAsString(
+                                AnotherDTO(
+                                    name = "raymond",
+                                    nickname = "yearnlune"
+                                )
+                            )
+                        )
+                    )
+                    .willReturn(
+                        aResponse()
+                            .withStatus(HttpStatus.OK.value())
+                            .withHeader("Content-Type", "application/json")
+                            .withBody(
+                                objectMapper.writeValueAsString(
+                                    AnotherDTO(
+                                        "f0161e50-4428-4e36-a6e0-a35b63cdb3cf",
+                                        "raymond",
                                         "yearnlune",
                                         LocalDateTime.of(2023, 9, 1, 0, 0, 0)
                                     )

@@ -91,7 +91,33 @@ class ExampleServiceTest @Autowired constructor(
             `is`(
                 AnotherDTO(
                     "f0161e50-4428-4e36-a6e0-a35b63cdb3cf",
-                    "홍길동",
+                    "raymond",
+                    "yearnlune",
+                    LocalDateTime.of(2023, 9, 1, 0, 0, 0)
+                )
+            )
+        )
+    }
+
+    @Test
+    @DisplayName("exampleFunctionC")
+    fun exampleFunctionC_succeed() {
+        /* GIVEN */
+        val another = AnotherDTO(
+            name = "raymond",
+            nickname = "yearnlune"
+        )
+
+        /* WHEN */
+        val result = exampleService.exampleFunctionC(another)
+
+        /* THEN */
+        assertThat(
+            result.getOrThrow(),
+            `is`(
+                AnotherDTO(
+                    "f0161e50-4428-4e36-a6e0-a35b63cdb3cf",
+                    "raymond",
                     "yearnlune",
                     LocalDateTime.of(2023, 9, 1, 0, 0, 0)
                 )

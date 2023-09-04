@@ -73,7 +73,7 @@ class ExampleServiceTest @Autowired constructor(
     }
 
     @Test
-    @DisplayName("exampleFunctionB-오류가 발생한 경우")
+    @DisplayName("exampleFunctionB")
     fun exampleFunctionB_succeed() {
         /* GIVEN */
         val id = "f0161e50-4428-4e36-a6e0-a35b63cdb3cf"

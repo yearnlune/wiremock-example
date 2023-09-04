@@ -1,0 +1,7 @@
+wiremock:
+  server:
+    port: 12828
+
+app:
+  another:
+    url: 127.0.0.1:12828
